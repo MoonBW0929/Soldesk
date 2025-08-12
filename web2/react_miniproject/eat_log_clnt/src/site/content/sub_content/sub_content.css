@@ -1,0 +1,266 @@
+/* TodayEat Style */
+
+#table_TodayEat{
+    width: 400px;
+    height: 400px;
+}
+
+
+
+/* NotLogin Style */
+
+#div_NotLogin{
+    text-align: center;
+    font-size: 20px;
+}
+
+
+
+/* Login Form Style */
+
+#div_loginBefore{
+    padding-left: 10px;
+}
+
+#div_loginAfter{
+    font-size: 12px;
+    text-align: center;
+}
+
+#table_loginAfter{
+    width: 100%;
+}
+
+#span_loginName{
+    font-size: 24px;
+}
+
+#td_logout, #td_mypage{
+    padding-top: 20px;
+    padding-bottom: 10px;
+    width: 50%;
+}
+
+.span_mymenu{
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#img_profile{
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+}
+
+.Link_SideBar{
+    color: white;
+    text-decoration: none;
+}
+
+.Link_SideBar:visited, .Link_SideBar:hover, .Link_SideBar:active {
+  color: white;
+}
+
+
+
+/* Mypage Modify */
+
+#table_Mypage_modify{
+    padding-left: 10px;
+    padding-right: 20px;
+    margin-left: 0px;
+    
+    border: 2px solid black;
+    border-radius: 20px;
+
+    width: 300px;
+    /* height: 100px; */
+
+    text-align: left;
+}
+
+#table_Mypage_modify input{
+    width: 100%;
+}
+
+#table_Mypage_modify button{
+    margin-bottom: 10px;
+    margin-top: 10px;
+    width: 80px;
+}
+
+#table_Mypage_modify_title{
+    font-size: 20px;
+    font-weight: bold;
+
+    padding-bottom: 20px;
+    padding-top: 10px;
+
+    color: #720d5d;
+}
+
+#table_Mypage_list img{
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+}
+
+
+
+/* Reg Eat Log */
+
+#table_RegEatLog{
+    width: 400px;
+    height: 400px;
+}
+
+.input_RegEatLog{
+    width: 360px;
+    height: 40px;
+    
+    margin-bottom: 5px;
+    
+    border-radius: 10px;
+    border: none;
+    /* background-color: #daa9cd; */
+    background-color: #720d5d22;
+    
+    font-size: 18px;
+    font-weight: bold;
+
+    transition: border 0.1s ease-in-out;
+
+    padding-left: 10px;
+
+    color: black;
+}
+
+.input_RegEatLog:focus{
+    border: 3.5px solid #720d5d;
+    outline: none;
+}
+
+#td_RegEatLog{
+    text-align: center;
+}
+
+#btn_reg_eatLog{
+    margin-top: 20px;
+    width: 350px;
+    height: 40px;
+
+    font-size: 15px;
+
+    border-radius: 10px;
+    border-color: white;
+}
+
+#div_RegEatLog_date{
+    padding-left: 15px;
+    text-align: left;
+}
+
+#div_RegEatLog_date input{
+    width: 150px;
+    border-radius: 10px;
+    text-align: center;
+    border-color: white;
+
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+#div_RegEatLog_file{
+    padding-left: 15px;
+    text-align: left;
+}
+
+/* 오버레이 스타일 */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 검은색 반투명 배경 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 팝업 스타일 */
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    width: 1100px;
+    height: 700px;
+    text-align: center;
+}
+
+#input_RegEatLog_addr{
+    width: 280px;
+
+    margin-left: 10px;
+}
+
+#btn_findAddr{
+    width: 70px;
+    height: 40px;
+    margin-bottom: 5px;
+
+    border-radius: 10px;
+    border-color: white;
+    box-shadow: none;
+
+    font-size: 14px;
+}
+
+
+
+/* KaKaoMapSearch */
+
+#table_KaKaoMapSearch{
+    width: 100%;
+    height: 90%;
+}
+
+
+
+/* basic app Style */
+
+.table_basic_app{
+    
+    border-radius: 30px;
+    border-spacing: 0px;
+}
+
+.table_basic_app th, .table_basic_app td{
+    padding: 0px;
+    margin: 0px;
+}
+
+.th_basicApp_title{
+    font-size: 18px;
+    height: 50px;
+
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
+
+    color: white;
+    background-color: #5d1049;
+
+    text-align: left;
+}
+
+.th_basicApp_title span{
+    padding-left: 20px;
+}
+
+.td_basicApp_list{
+    background-color: #daa9cd;
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    text-align: center;
+}

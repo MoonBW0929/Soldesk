@@ -1,0 +1,67 @@
+/* layout main color*/
+/* #4e0d3a */
+/* #5d1049 */
+/* #720d5d */
+
+/* Side bar Style */
+
+#table_SideBar{
+    width: 20vw;
+    min-width: 200px;
+    height: calc(92vh);
+    
+    color: white;
+    background-color: #4e0d3a;
+    font-weight: bold;
+
+    margin: 0px;
+    padding: 0px;
+
+    border-spacing: 10px;
+}
+
+.td_content{
+    height: 60px;
+    padding-left: 10px;
+}
+
+#td_loginform{
+    border-bottom: 2px white solid;
+    height: 80px;
+}
+
+.Link_SideBar{
+    color: white;
+    text-decoration: none;
+}
+
+.Link_SideBar:visited, .Link_SideBar:hover, .Link_SideBar:active {
+  color: white;
+}
+
+
+
+/* LayOut Style */
+
+#table_main{
+    width: 100%;
+    height: 100vh;
+    
+    margin: 0px;
+    padding: 0px;
+}
+
+#th_Maintitle{
+    font-size: 30px;
+    text-align: left;
+
+    padding-left: 30px;
+    height: 8vh;
+    
+    border-bottom: 2px black solid;
+}
+
+#td_contents{
+    text-align: center;
+    width: 100%;
+}

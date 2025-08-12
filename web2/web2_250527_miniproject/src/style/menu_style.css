@@ -1,0 +1,67 @@
+/* Main menu style */
+
+#table_menu{
+    width: 1000px;
+    height: 50px;
+    text-align: center;
+}
+
+#td_title{
+    font-size: 25px;
+    font-weight: bold;
+}
+
+#table_choice{
+    border-top: black 8px double;
+    border-bottom: black 8px double;
+
+    width: 1000px;
+    height: 50px;
+    font-size: 18px;
+    table-layout: fixed;
+
+    padding-top: 8px;
+    padding-bottom: 8px;
+
+    margin-top: 10px;
+}
+
+#table_menu span{
+    cursor: pointer;
+}
+
+/* Reg menu style */
+
+#table_reg_menu{
+    margin-top: 10px;
+    border: 4px solid black;
+    border-radius: 40px;
+    width: 600px;
+    height: 400px;
+
+    font-size: 18px;
+    text-align: left;
+
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#table_reg_menu input{
+    width: 100%;
+    height: 30px;
+    box-sizing: border-box;
+}
+
+#table_reg_menu td{
+    padding: 0px;
+}
+
+#table_reg_menu th{
+    font-size: 22px;
+}
+
+#table_reg_menu button{
+    width: 100%;
+    height: 35px;
+    box-sizing: border-box;
+}

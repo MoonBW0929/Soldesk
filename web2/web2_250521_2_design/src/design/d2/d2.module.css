@@ -1,0 +1,7 @@
+.ccc{
+    color: red;
+}
+
+:global .ok{
+    background-color: green;
+}

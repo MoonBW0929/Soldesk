@@ -1,0 +1,165 @@
+/* basic app Style */
+
+.table_basic_app{
+    
+    border-radius: 30px;
+    border-spacing: 0px;
+}
+
+.table_basic_app th, .table_basic_app td{
+    padding: 0px;
+    margin: 0px;
+}
+
+.th_basicApp_title{
+    font-size: 18px;
+    height: 50px;
+
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
+
+    color: white;
+    background-color: #5d1049;
+}
+
+.td_basicApp_list{
+    background-color: #daa9cd;
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+
+#table_Mypage_list img{
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+}
+
+
+
+/* Sign Up, Login Style */
+
+#table_login{
+    width: 350px;
+    height: 300px;
+    border: #720d5d 2px solid;
+
+    text-align: left;
+    font-weight: bold;
+    font-size: 15px;
+
+    padding-left: 25px;
+    padding-right: 30px;
+}
+
+#table_signup{
+    width: 500px;
+    height: 500px;
+    border: #720d5d 2px solid;
+
+    text-align: left;
+    font-weight: bold;
+    font-size: 15px;
+
+    padding-left: 25px;
+    padding-right: 30px;
+}
+
+#table_login td, #table_signup td{
+    color: #720d5d;
+}
+
+#th_login_title, #th_signup_title{
+    font-size: 22px;
+}
+
+#table_login button, #table_signup button{
+    width: 100%;
+    height: 35px;
+}
+
+#table_login input, #table_signup input{
+    width: 100%;
+    height: 25px;
+}
+
+
+
+/* MyPage Style */
+
+#table_Mypage_main{
+    width: 100%;
+    text-align: center;
+}
+
+#table_Mypage_info{
+    width: 600px;
+    height: 700px;
+}
+
+#table_Mypage_list{
+    width: 100%;
+    height: 100%;
+
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.td_Mypage_list_name{
+    text-align: left;
+    padding-left: 40px;
+    height: 16%;
+}
+
+.td_Mypage_list_content{
+    color: #720d5d;
+    font-size: 22px
+}
+
+.td_Mypage_list_mdf{
+    font-size: 25px;
+    padding-right: 40px;
+    cursor: pointer;
+}
+
+.td_Mypage_list_mdf Link{
+    text-decoration: none;
+}
+
+#td_Mypage_btn{
+    text-align: right;
+    padding-right: 40px;
+}
+
+#td_Mypage_btn button{
+    width: 150px;
+    height: 50px;
+
+    border-radius: 10px;
+    border-color: #720d5d;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    background-color: #720d5d;
+    color: white;
+
+    cursor: pointer;
+}
+
+.Link_Mypage{
+    color: #720d5d;
+    text-decoration: none;
+    font-size: 35px;
+}
+
+.Link_Mypage:visited, .Link_Mypage:hover, .Link_Mypage:active {
+    color: #720d5d;
+}
+
+
+
+/* Eat Log Home */
+
+#table_EatLogHome td{
+    padding-bottom: 10px;
+}
