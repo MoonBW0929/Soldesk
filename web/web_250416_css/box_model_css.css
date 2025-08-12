@@ -1,0 +1,10 @@
+body{
+    background-color: rgb(243, 234, 222);
+}
+
+div{
+    border: #333333 3px solid;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+}

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>h4_ball</title>
+        <script src="jQuery.js"></script>
+
+        <script>
+            $(function(){
+                var paper = document.getElementById("c");
+                var pen = paper.getContext("2d");
+                var ball_size = 30;
+                var max_x = 400 - ball_size;
+                var max_y = 600 - ball_size;
+                var x = 150;
+                var y = 500;
+                var x_move = -2;
+                var y_move = -2;
+                var mouse_x;
+                var pad_x;
+                var pad_x_size = 120;
+                var pad_y_size = 20;
+
+                var i = new Image();
+                i.src = "ball.png";
+                i.onload = function(){
+                    pen.drawImage(i, x, y, ball_size, ball_size);
+                }
+
+                pen.fillStyle = "#00000011";
+                pen.fillRect(0, 0, 400, 600);
+
+                pen.shadowOffsetX = 0;
+                pen.shadowOffsetY = 0;
+                pen.shadowColor = "red";
+                pen.shadowBlur = 10;
+
+                setInterval(function (){
+
+                    pen.shadowBlur = 0;
+                    pen.fillStyle = "#00000011";
+                    pen.fillRect(0, 0, 400, 600);
+
+                    // i.src = "ball.png";
+                    // i.onload = function(){
+                        x += x_move;
+                        y += y_move;
+
+                        pen.shadowBlur = 10;
+                        pen.drawImage(i, x, y, ball_size, ball_size);
+                        pen.shadowBlur = 0;
+
+                        if(x == 0 || x == max_x){
+                            x_move = -x_move;
+                            if(y == 0 || y == max_y) y_move = -y_move;
+                        }
+                        else if(y == 0){
+                            y_move = -y_move;
+                            if(x == 0 || x == max_x) x_move = -x_move;
+                        }
+                        else if(y == (600 - ball_size - pad_y_size)){
+                            if((x >= (pad_x - ball_size/2)) && 
+                            (x < (pad_x + pad_x_size + ball_size/2))){
+                                y_move = -y_move;
+                            }
+                        }
+                        else if(y == max_y){
+                            alert("Game Over");
+                            // alert(y + " / " + x + " / " + (pad_x - ball_size) + " / " + (pad_x + pad_x_size));
+
+                            pen.fillStyle = "#000000";
+                            pen.fillRect(0, 0, 400, 600);
+
+                            x = 150;
+                            y = 500;
+                            x_move = -2;
+                            y_move = -2;
+
+                            i.src = "ball.png";
+                            pen.drawImage(i, x, y, ball_size, ball_size);
+                        }
+                    // }
+
+                    $("canvas").mousemove(function(evt){
+                        pad_x = evt.pageX - 8 - (pad_x_size/2);
+                        if(pad_x < 0) pad_x = 0;
+                    });
+
+                    if((pad_x + pad_x_size) >= 400) pad_x = 400 - pad_x_size;
+                    pen.fillStyle = "blue";
+                    pen.fillRect(pad_x, (600-pad_y_size), pad_x_size, pad_y_size);
+                }, 2);
+            });
+        </script>
+
+        <style>
+            canvas{
+                border: 1px black solid;
+                x: 0px;
+                y: 0px;
+                margin-top: 0px;
+                margin-left: 0px;
+            }
+        </style>
+
+    </head>
+    <body>
+        <canvas id="c" width="400px" height="600px"></canvas>
+        <h1></h1>
+    </body>
+</html>

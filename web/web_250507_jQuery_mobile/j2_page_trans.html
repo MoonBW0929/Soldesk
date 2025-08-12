@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>j2_page_trans</title>
+        <link rel="stylesheet" href="https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+        <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script src="https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+    </head>
+    <body>
+        <div id="p1" data-role="page">
+            <div data-role="header" data-theme="b" data-position="fixed">
+                <h1>page1</h1>
+                <a href="#p2" data-transition="slidedown" data-icon="arrow-l">2page</a>
+            </div>
+            <div data-role="content" data-theme="d">
+            
+            </div>
+        </div>
+        <div id="p2" data-role="page">
+            <div data-role="header" data-theme="b" data-position="fixed">
+                <h1>page2</h1>
+                <a href="#p1" data-transition="slidedown" data-icon="arrow-l">1page</a>
+            </div>
+            <div data-role="content" data-theme="d">
+
+            </div>
+        </div>
+    </body>
+</html>

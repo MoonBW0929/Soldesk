@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>j4_dom_attr</title>
+        <script src="jQuery.js"></script>
+
+        <script>
+            $(function(){
+
+                $("#btn1").click(function(){
+                    $("a").attr("href", "https://www.google.com");
+                    $("a").html("google");
+                });
+                $("#btn2").click(function(){
+                    alert($("a").attr("href"));  
+                })
+                $("#btn3").click(function(){
+                    // $("a").attr("href", "");
+                    $("a").removeAttr("href");
+                });
+                
+                var walk = 1;
+                setInterval(function(){
+
+                    $("img").attr("src", "./img/hero_walk_0" + walk + ".png")
+                    walk = (walk % 5) + 1;
+                }, 300)
+            });
+        </script>
+
+        <style>
+            
+        </style>
+
+    </head>
+    <body>
+        <a href="https://www.naver.com">Naver</a>
+        <hr>
+        <button id="btn1">modify1</button>
+        <button id="btn2">check</button>
+        <button id="btn3">delete</button>
+        <hr>
+        <img src="./img/hero_walk_01.png">
+    </body>
+</html>

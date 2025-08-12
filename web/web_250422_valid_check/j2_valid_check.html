@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>j2_valid_check</title>
+        <script src="j2_check.js"></script>
+        <script src="moon_valid_checker.js"></script>
+    </head>
+    <body>
+        <form name="joinform" action="http//195.168.9.125:4567/member.sign.up"
+        onsubmit="return check();">
+        
+        id : <input id="id_field" maxlength="10" autocomplete="off"><p>
+        pw : <input id="pw_field" maxlength="10" type="password"><p>
+        Re-pw : <input id="re_pw_field" maxlength="10" type="password"><p>
+        나이 : <input id="age_field" maxlength="3"><p>
+        프사 : <input id="photo_field" type="file"><p>
+        <button>button</button>
+
+        </form>
+    </body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>j1_daum_book</title>
+        <script src="jQuery.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.js"></script>
+        <script>
+
+            $(function(){
+                
+                $("button").click(function (){
+                    
+                    var q = $("input").val();
+                    
+                    var rest_api_key = "c1f71dc8cc391306ea455cf2e1513ed3";
+                    var haeder = {Authorization : "KakaoAK "+rest_api_key}
+                    
+                    $.ajax({
+                        url : "https://dapi.kakao.com/v3/search/book",
+                        data : {query : q},
+                        // headers : haeder,
+                        beforeSend: function(xhr) {
+                            xhr.setRequestHeader("Authorization", "KakaoAK "+rest_api_key);
+                        },
+                        success : function (json){
+                            console.log(json);
+                            
+                            var tr1, tr2, tr3;
+                            var td;
+                            var img, div;
+                            
+                            $("table").empty();
+
+                            for(var js of json["documents"]){
+                                
+                                // tr = $("<tr></tr>");
+                                // td = $("<td></td>").html(js["sale_price"]);
+                                // $(td2).attr("rowspan", "2");
+                                // $(tr).append(td);
+                                
+                                // tr = $("<tr></tr>");
+                                // td = $("<td></td>").html(js["title"]);
+                                // $(td).css("height", "40px");
+                                // $(tr).append(td);
+                                
+                                // tr = $("<tr></tr>");
+                                // $(tr).append(td);
+                                // $("table").append(tr);
+                                
+                                
+                                // tr = $("<tr></tr>");
+                                // td1 = $("<td></td>").html(js["contents"]);
+                                
+                                // $(tr).append(td1);
+                                // $("table").append(tr);
+                                
+                                div = $("<div></div>");
+                                img = $("<img></img>").attr("src", js["thumbnail"]);
+                                $(img).css("width", "240px").css("height", "360px");
+                                $(div).append(img);
+                                
+                                $(".bxslider").append(div);
+                            }
+
+                            var bx_slider = $(".bxslider").bxSlider({
+                                
+                                mode: "fade",
+                                captions: true,
+                                slideWidth: 240
+                            });
+
+                            bx_slider.reloadSlider();
+                        }
+                    });
+                });
+            });
+
+        </script>
+    </head>
+    <body>
+        <input>
+        <button>검색</button>
+        <div class="bxslider"></div>
+        <table border="1px">
+        </table>
+    </body>
+</html>

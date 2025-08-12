@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>web_game_client</title>
+    </head>
+    <script src="http://195.168.9.125:5678/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script>
+        $(function(){
+        
+            var socket = io.connect("http://195.168.9.125:5678");
+
+            var paper = document.getElementById("c");
+            var pen = paper.getContext("2d");
+            var ball_size = 30;
+            var max_x = 400 - ball_size;
+            var max_y = 600 - ball_size;
+            var x = 150;
+            var y = 500;
+            var x_move = -2;
+            var y_move = -2;
+            var pad_x = 140;
+            var pad_x_2 = 140;
+            var pad_x_size = 120;
+            var pad_y_size = 20;
+
+            var host = false;
+            var guest = false;
+            var start = false;
+
+            var i = new Image();
+            i.src = "ball.png";
+
+            pen.shadowBlur = 0;
+            pen.fillStyle = "#000000";
+            pen.fillRect(0, 0, 400, 600);
+
+            pen.shadowOffsetX = 0;
+            pen.shadowOffsetY = 0;
+            pen.shadowColor = "red";
+            pen.shadowBlur = 10;
+
+            setInterval(function (){
+
+                if(start){
+                    
+                    if(host){
+
+                        x += x_move;
+                        y += y_move;
+
+                        var ball_pos = {
+                            "x" : x,
+                            "y" : y,
+                        }
+                        socket.emit("ball_move", ball_pos);
+    
+                        if(x == 0 || x == max_x){
+                            x_move = -x_move;
+                            if(y == 0 || y == max_y) y_move = -y_move;
+                        }
+                        else if(y == 0){
+                            socket.emit("game_start", false);
+                        }
+                        else if(y == (600 - ball_size - pad_y_size)){
+                            if((x >= (pad_x - ball_size/2)) && 
+                            (x < (pad_x + pad_x_size + ball_size/2))){
+                                y_move = -y_move;
+                            }
+                        }
+                        else if(y == (pad_y_size)){
+                            if((x >= (pad_x_2 - ball_size/2)) && 
+                            (x < (pad_x_2 + pad_x_size + ball_size/2))){
+                                y_move = -y_move;
+                            }
+                        }
+                        else if(y == max_y){
+                            
+                            socket.emit("game_start", false);
+                        }
+                    }
+
+                    pen.fillStyle = "blue";
+                    pen.fillRect(pad_x, (600-pad_y_size), pad_x_size, pad_y_size);
+
+                    pen.fillStyle = "green";
+                    pen.fillRect(pad_x_2, 0, pad_x_size, pad_y_size);
+                }
+                
+            }, 5);
+            
+            $("canvas").mousemove(function(evt){
+                var pad = evt.pageX - 8 - (pad_x_size/2);
+                if(pad < 0) pad = 0;
+                if((pad + pad_x_size) >= 400) pad = 400 - pad_x_size;
+                
+                var pad_info = {
+                    "pad" : pad,
+                    "h" : host,
+                    "g" : guest
+                }
+
+                socket.emit("pad_move", pad_info);
+            });
+
+            $("canvas").click(function (){
+                if(!host && !guest){
+
+                    socket.emit("game_start", true);
+                    host = true;
+                }
+
+                if(host && !start){
+                    
+                    pen.fillStyle = "#000000";
+                    pen.fillRect(0, 0, 400, 600);
+
+                    x = 150;
+                    y = 500;
+                    x_move = -2;
+                    y_move = -2;
+                    
+                    socket.emit("game_start", true);
+                }
+            });
+    
+            socket.on("game_start_srv", function (res){
+                if(res){
+
+                    if(!host) guest = true;
+                    start = res;
+                }
+                else{
+
+                    if(y == max_y){
+                        if(host) alert("Lose");
+                        else if(guest) alert("Win");
+                    }
+                    if(y == 0){
+                        if(host) alert("Win");
+                        else if(guest) alert("Lose");
+                    }
+                }
+            });
+    
+            socket.on("ball_move_srv", function (ball_pos){
+                
+                if(!host){
+                    ball_pos.x = max_x - ball_pos.x;
+                    ball_pos.y = max_y - ball_pos.y;
+                }
+                pen.shadowBlur = 0;
+                pen.fillStyle = "#00000011";
+                pen.fillRect(0, 0, 400, 600);
+    
+                pen.shadowBlur = 10;
+                pen.drawImage(i, ball_pos.x, ball_pos.y, ball_size, ball_size);
+                pen.shadowBlur = 0;
+            });
+
+            socket.on("pad_move_srv", function (pad_info){
+                if(pad_info.h == host && pad_info.g == guest) {
+                    pad_x = pad_info.pad;
+                }
+                else{
+                    pad_x_2 = 400 - pad_info.pad - pad_x_size;
+                }
+            })
+        });
+        </script>
+
+    <style>
+        canvas{
+            x: 0px;
+            y: 0px;
+            margin-top: 0px;
+            margin-left: 0px;
+        }
+    </style>
+
+    <body>
+        <canvas id="c" width="400px" height="600px"></canvas>
+        <h1></h1>
+    </body>
+</html>

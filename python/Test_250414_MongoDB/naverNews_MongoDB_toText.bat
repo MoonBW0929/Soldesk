@@ -1,0 +1,1 @@
+python naverNews_MongoDB_toText.py

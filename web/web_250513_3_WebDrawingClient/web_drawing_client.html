@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>j1_ws_client</title>
+    </head>
+    <script src="http://195.168.9.125:5678/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+    <script>
+        $(function(){
+        
+            var socket = io.connect("http://195.168.9.125:5678");
+
+            var paper = document.getElementById("c");
+            var pen = paper.getContext("2d");
+
+            var x, y;
+            var end_x, end_y;
+            var draw_mode = false;
+            var color = "#000000";
+
+            pen.strokeStyle = color;
+            $("#input_color").val(color);
+
+            $("#input_color").keyup(function(evt){
+                if(evt.keyCode == 13){
+                    
+                    $(this).css("color", $(this).val());
+                    color = $(this).val();
+                }
+            });
+
+            $("canvas").mousedown(function (evt){
+                draw_mode = true;
+                x = evt.pageX - 16;
+                y = evt.pageY - 58;
+            });
+            $("canvas").mousemove(function (evt){
+                if(draw_mode){
+                    
+                    var line = {
+                        "x" : x,
+                        "y" : y,
+                        "end_x" : evt.pageX - 16,
+                        "end_y" : evt.pageY - 58,
+                        "color" : color
+                    };
+
+                    socket.emit("draw", line);
+                }
+            });
+            $("body").mouseup(function (){
+                draw_mode = false;
+            });
+
+            socket.on("draw_srv", function(line){
+
+                pen.strokeStyle = line.color;
+
+                pen.beginPath();
+                pen.moveTo(line.x, line.y);
+                pen.lineTo(line.end_x, line.end_y);
+                pen.closePath();
+                pen.stroke();
+                x = line.end_x;
+                y = line.end_y;
+            });
+        });
+    </script>
+    <style>
+        canvas{
+            border: 1px solid black;
+        }
+    </style>
+    <body>
+        <div id="p_main" data-role="page">
+            <div data-role="header" data-theme="b" data-position="fixed">
+                <h1>Drawing</h1>
+            </div>
+            <div id="content_div" data-role="content" align="left">
+                <canvas id="c" width="600" height="400"></canvas>
+                <input id="input_color">
+            </div>
+        </div>
+    </body>
+</html>

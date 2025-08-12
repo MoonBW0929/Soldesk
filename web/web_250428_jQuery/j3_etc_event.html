@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>j3_etc_event</title>
+        <script src="jQuery.js"></script>
+        <script>
+            $(function (){
+                $("select").change(function (){
+                });
+
+                if(navigator.userAgent.indexOf("Android") != -1 ||
+                    navigator.userAgent.indexOf("iPhone") != -1){
+                        location.href = "https://www.naver.com";
+                }
+
+                $(window).resize(function (){
+                    var w = $(window).width();
+                    var h = $(window).height();
+                });
+
+                $(window).scroll(function (){
+                
+                    var total_h = $(document).height();
+                    var window_h = $(window).height();
+                    var scroll_offset_top = $(window).scrollTop();
+                    var scroll_offset_bottom = window_h + scroll_offset_top;
+
+                    if(scroll_offset_bottom >= (total_h - 10)){
+                        var h3 = $("<h3></h3>").text("next contents");
+                        $("body").append(h3);
+                    }
+                });
+            });
+        </script>
+        <style>
+        </style>
+    </head>
+    <body>
+        <select>
+            <option>zzz</option>
+            <option>ggg</option>
+            <option>ddd</option>
+        </select>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+        <h2>zzzz</h2>
+    </body>
+</html>

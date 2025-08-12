@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>j1_repeat_stmt</title>
+        <script src="jQuery.js"></script>
+
+        <script>
+            $(function(){
+
+                $("h1").each(function (i, v){
+                    $(v).css("font-size", 10*(i+1) + "px");
+                });
+
+                // var dogs = [
+                //     {name : "후추", age : 3},
+                //     {name : "호초", age : 2},
+                //     {name : "흐츠", age : 1},
+                // ]
+                // $.each(dogs, function(i, dog){
+                //     alert(dog.name);
+                //     alert(dog.age);
+                // });
+
+                var css = [
+                    {"c":"red", "bgc":"black"},
+                    {"c":"yellow", "bgc":"green"},
+                    {"c":"purple", "bgc":"orange"},
+                ]
+                $("h2").each(function (i, v){
+                    $(v).css("color", css[i].c);
+                    $(v).css("background-color", css[i].bgc);
+                });
+            });
+        </script>
+
+    </head>
+    <body>
+        <h2>ttt</h2>
+        <h2>sss</h2>
+        <h2>eee</h2>
+
+        <h1>zzz</h1>        
+        <h1>ggg</h1>        
+        <h1>ddd</h1>        
+    </body>
+</html>

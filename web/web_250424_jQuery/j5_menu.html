@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>j5_menu</title>
+        <script src="jQuery.js"></script>
+
+        <script>
+            $(function(){
+
+                $("#menu").click(function (){
+                    if($("table").css("top") == ("-31px")) $("table").css("top", "0px");
+                    else $("table").css("top", "-31px");
+                });
+            });
+        </script>
+
+        <style>
+            table{
+                position: fixed;
+                top: -31px;
+            }
+        </style>
+
+    </head>
+    <body>
+        <table border="1px">
+            <tr>
+                <td>
+                    <a href="https://naver.com">Naver</a>
+                </td>
+                <td>
+                    <a href="https://goolge.com">Google</a>
+                </td>
+                <td>
+                    <a href="https://daum.net">Daum</a>
+                </td>
+            </tr>
+            <tr>
+                <td id="menu" colspan="3" align="center">Menu</td>
+            </tr>
+        </table>
+    </body>
+</html>

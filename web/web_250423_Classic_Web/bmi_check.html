@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>비만도 검사</title>
+        <link rel="stylesheet" href="bmi_check.css">
+        <script src="bmi_check.js"></script>
+        <script src="moon_valid_checker.js"></script>
+    </head>
+    <body>
+        <form name="main_form" action="http://195.168.9.125:4567/bmicheck.result" method="post" enctype="multipart/form-data"
+        onsubmit="return check();">
+            <table id="main_table" align="center">
+                <tr>
+                    <th colspan="2" class="input_name">비만도 검사</th>
+                </tr>
+                <tr>
+                    <td class="input_name">이름</td>
+                    <td class="input_data">
+                        <input name="name" id="name" maxlength="4">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="input_name">키</td>
+                    <td class="input_data">
+                        <input name="height" id="height" maxlength="3">
+                        <span>cm</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="input_name">몸무게</td>
+                    <td class="input_data">
+                        <input name="weight" id="weight" maxlength="3">
+                        <span>kg</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="input_name">사진</td>
+                    <td class="input_data">
+                        <input name="photo" id="photo" type="file">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <button>검사 시작</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </body>
+</html>

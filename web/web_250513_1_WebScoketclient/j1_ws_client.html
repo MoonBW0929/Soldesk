@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>j1_ws_client</title>
+    </head>
+    <script src="http://195.168.9.125:5678/socket.io/socket.io.js"></script>
+    <script src="jQuery.js"></script>
+    <script>
+        $(function(){
+        
+            var socket = io.connect("http://195.168.9.125:5678");
+
+            $("button").click(function(){
+                socket.emit("send", $("input").val());
+                $("input").val("");
+            });
+
+            socket.on("send", function(res){
+                $("h1").text(res);
+            });
+        });
+    </script>
+    <body>
+        <input>
+        <button>전송</button>
+        <h1></h1>
+    </body>
+</html>

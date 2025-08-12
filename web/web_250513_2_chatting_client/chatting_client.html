@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>j1_ws_client</title>
+    </head>
+    <script src="http://195.168.9.125:5678/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+    <script>
+        $(function(){
+        
+            var socket = io.connect("http://195.168.9.61:56567");
+
+            $("#btn_start").click(function (){
+                $.mobile.changePage("#p_chat");
+            });
+            
+            $("#input_chat").keyup(function (evt){
+                if(evt.keyCode == 13){
+                    var list = {
+                        "who" : $("#input_name").val(),
+                        "txt" : $("#input_chat").val()
+                    }
+                    socket.emit("clntMsg", list);
+                    $("#input_chat").val("");
+                }
+            });
+
+            socket.on("srvMsg", function(res){
+
+                
+                var table = $("<table></table>");
+                var tr1 = $("<tr></tr>");
+                var tr2 = $("<tr></tr>");
+                var td1 = $("<td></td>");
+                var td2 = $("<td></td>");
+                var t_tr = $("<tr></tr>");
+                var t_td = $("<td></td>");
+                
+                $(td1).text(res.who).css("font-weight", "bold");
+                
+                $(td2).text(res.txt);
+                $(td2).css("border", "1px solid black");
+                $(td2).css("width", "fit-content");
+                $(td2).css("padding", "10px");
+                $(td2).css("border-radius", "10px");
+                
+                if(res.who == $("#input_name").val()){
+
+                    $(t_td).attr("align", "right");
+                    $(td1).css("text-align", "right");
+                    $(td2).css("background-color", "yellow");
+                }
+
+                $(tr1).append(td1);
+                $(table).append(tr1);
+                $(tr2).append(td2);
+                $(table).append(tr2);
+                
+                $(t_td).append(table);
+                $(t_tr).append(t_td);
+                $(t_tr).css("margin-top", "5px");
+                $("#table_chat").append(t_tr);
+
+                $(window).scrollTop($(document).height());
+            });
+        });
+    </script>
+    <style>
+        #table_chat{
+            width: 100%;
+        }
+    </style>
+    <body>
+        <div id="p_main" data-role="page">
+            <div data-role="header" data-theme="b" data-position="fixed">
+                <h1>Main</h1>
+            </div>
+            <div data-role="content" align="center">
+                <img src="picture.jpg">
+                <input id="input_name" placeholder="대화명">
+                <button id="btn_start">입장</button>
+            </div>
+        </div>
+
+        <div id="p_chat" data-role="page">
+            <div data-role="header" data-theme="b" data-position="fixed">
+                <a href="#p_main" data-icon="arrow-l">Prev</a>
+                <h1>Chatting</h1>
+            </div>
+            <div data-role="content">
+                <table id="table_chat" align="center">
+                    
+                </table>
+            </div>
+            <div data-role="footer" data-theme="b" data-position="fixed">
+                <input id="input_chat">
+            </div>
+        </div>
+    </body>
+</html>

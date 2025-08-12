@@ -1,0 +1,145 @@
+
+from concurrent.futures import BrokenExecutor
+from curses.ascii import US
+from random import randint
+
+
+RSP = ["가위", "바위", "보"]
+
+class Human_q:
+
+    def get_q_RSP(self):
+        q_RSP = randint(1, 3)
+        print("친구 : %s" % RSP[q_RSP-1])
+        return q_RSP        
+
+class Human_c:
+
+    def get_c_RSP(self):
+        c_RSP = int(input("선택 : "))
+        if 0 < c_RSP < 4:
+            print("나 : %s" % RSP[c_RSP-1])
+            return c_RSP
+        
+        return self.get_c_RSP()
+    
+class Human_referee:
+    
+    def start_RSP(self, q, c):
+        print("가위바위보 시작")
+        print("1) %s\n2) %s\n3) %s" % (RSP[0], RSP[1], RSP[2]))
+        print("-----------------")
+        self.wins = 0
+
+        while True:
+            c_RSP = c.get_c_RSP()
+            q_RSP = q.get_q_RSP()
+
+            result = self.get_RSP_result(c_RSP, q_RSP)
+            if result == 0:
+                self.print_RSP_result()
+                break
+            elif result == 1: self.wins += 1
+
+            print("-----------------")
+    
+    def get_RSP_result(self, c_RSP, q_RSP):
+            result = c_RSP - q_RSP
+
+            if result == -1 or result == 2:
+                print("패")
+                return 0
+            elif result == 0:
+                print("무승부")
+                return 2
+            else: 
+                print("승")
+                return 1
+
+    def print_RSP_result(self):
+        print("-----------------")
+        print("%d연승" % self.wins)
+
+referee = Human_referee()
+q = Human_q()
+c = Human_c()
+
+# referee.start_RSP(q, c)
+
+#################################################
+
+class Enemy:
+    def fire(self):
+        return randint(1, 3)
+
+class User:
+
+    def __init__(self):
+        self.win = 0
+
+    def fire(self):
+        return int(input("뭐 : "))
+
+class Referee:
+
+    def __init__(self):
+        self.ruleBook = [None, "가위", "바위", "보"]
+
+    def callBlueCorner(self):
+        return Enemy()
+    
+    def callRedCorner(self):
+        return User()
+
+    def start(self):
+        blueCorner = self.callBlueCorner()
+        redCorner = self.callRedCorner()
+
+        self.tellRule()
+
+        while True:
+            bluePaper = self.enemyFire(blueCorner)
+            redPaper = self.userFire(redCorner)
+            self.tellHand(bluePaper, redPaper)
+            end =  self.judge(bluePaper, redPaper, redCorner)
+            if end:
+                self.tellResult(redCorner)
+                break
+
+    def tellHand(self, bluePaper, redPaper):
+        print("유저 : %s" % self.ruleBook[redPaper])
+        print("컴터 : %s" % self.ruleBook[bluePaper])
+
+    def judge(self, bluePaper, redPaper, u):
+        result = redPaper - bluePaper
+
+        if result == -1 or result == 2:
+            print("패")
+            return True
+        elif result == 0:
+            print("무승부")
+        else: 
+            print("승")
+            u.win += 1
+        return False
+
+    def tellRule(self):
+        for i, v in enumerate(self.ruleBook):
+            if i != 0:
+                print("%d) %s" % (i, v))
+        print("-------------")
+
+    def enemyFire(self, e):
+        e.fire()
+
+    def userFire(self, u):
+        redPaper = u.fire()
+        if 0 < redPaper < 4:
+            return redPaper
+        return self.userFire(u)
+
+    def tellResult(self, u):
+        print("%d연승" % u.wins)
+
+r = Referee()
+r.start()

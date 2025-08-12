@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>j1_mouse_event</title>
+        <script src="jQuery.js"></script>
+        <script>
+            $(function (){
+
+                $(document).contextmenu(function (){
+                    
+                });
+
+                $("html").mouseup(function (evt){
+                    if(evt.button == 2){
+
+                        $("table").css("top", evt.pageY+"px");
+                        $("table").css("left", evt.pageX+"px");
+                        $("table").css("opacity", "1");
+                        
+                        setTimeout(function(){
+                            
+                            $("table").css("opacity", "0");
+
+                            setTimeout(function (){
+
+                                $("table").css("top", "-100px");
+                                $("table").css("left", "-100px");
+                            }, 300);
+                        }, 3000);
+                    }
+                
+                });
+            });
+        </script>
+        <style>
+            table{
+                position: absolute;
+                top: -100px;
+                left: -100px;
+                transition: opacity 0.3s ease-in;
+                opacity: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <table border="1px">
+            <tr>
+                <td>
+                    <a href="https://www.naver.com">naver</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="https://www.google.com">google</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="https://www.daum.net">daum</a>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

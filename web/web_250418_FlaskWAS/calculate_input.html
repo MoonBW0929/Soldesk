@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>calculate_input</title>
+    </head>
+    <body>
+        <a href="http://195.168.9.125:4567/calculate.do?x=10&y=5">
+            10과 5 계산
+        </a>
+        <hr>
+        <h3>계산</h3>
+        <form action="http://195.168.9.125:4567/calculate.do">
+            <input name="x"><br>
+            <input name="y"><br>
+            <button>start</button>
+        </form>
+        <hr>
+        <h3>구구단</h3>
+        <form action="http://195.168.9.125:4567/gugudan.show" method="post">
+            <input name="start"><br>
+            <input name="end"><br>
+            <button>start</button>
+        </form>
+    </body>
+</html>

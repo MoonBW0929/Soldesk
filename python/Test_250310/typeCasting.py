@@ -1,0 +1,5 @@
+menu = input("메뉴명\t: ")
+price = input("가격\t: ")
+price = int(price)
+print("-----------------")
+print("%d원짜리 %s 먹자" % (price, menu))

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>input</title>
+        <link rel="stylesheet" href="input.css">
+    </head>
+    <body>
+        <form action="http://195.168.9.125:4567/member.sign.up" method="post">
+            <table class="sign_table">
+                <tr>
+                    <th colspan="2">회원가입</th>
+                </tr>
+                <tr>
+                    <td class="input_name">id</td>
+                    <td id="id_input">
+                        <input name="id" type="text" class="text_input">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="input_name">pw</td>
+                    <td id="pw_input">
+                        <input name="pw" type="password" class="text_input">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="input_name">성별</td>
+                    <td>
+                        <input name="gender" type="radio" value="남" class="gender_radio" checked>
+                        <span class="radio_span">남</span>
+                        <input name="gender" type="radio" value="여" class="gender_radio">
+                        <span class="radio_span">여</span>
+                        <input name="gender" type="radio" value="기타" class="gender_radio">
+                        <span class="radio_span">기타</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="input_name">주소</td>
+                    <td>
+                        <select name="addr">
+                            <option>서울</option>
+                            <option>수도권</option>
+                            <option>기타 국내</option>
+                            <option>해외</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="input_name">취미</td>
+                    <td>
+                        <input name="hobby" type="checkbox" value="운동">
+                        <span class="cb_span">운동</span>
+                        <input name="hobby" type="checkbox" value="독서">
+                        <span class="cb_span">독서</span>
+                        <input name="hobby" type="checkbox" value="잠">
+                        <span class="cb_span">잠</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="input_name">자기소개</td>
+                    <td>
+                        <textarea name="comment" id="comment_input"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <!-- <input type="image" src="button.jpg"><br> -->
+                        <button id="sign_button">
+                            Sign&nbsp;up
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </body>
+</html>

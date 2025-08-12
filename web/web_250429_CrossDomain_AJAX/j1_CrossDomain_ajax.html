@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>j1_CrossDomain_ajax</title>
+        <script src="jQuery.js"></script>
+        <script src="jquery.canvasjs.min.js"></script>
+        <script src="canvasjs.min.js"></script>
+        <script type="text/javascript">
+
+            
+            $(function(){
+                
+                $.ajax({
+                    url : "http://openapi.seoul.go.kr:8088/575a4655496b636839386f58586542/xml/RealtimeCityAir/1/25/",
+                    success : function(asd){
+
+                        var list_pm25 = [];
+                        var list_pm10 = [];
+                        
+                        $(asd).find("row").each(function (i, v){
+
+                            var tr = $("<tr></tr>");
+
+                            var td = $("<td></td>").text($(v).find("MSRRGN_NM").text());
+                            $(tr).append(td);
+                            
+                            td = $("<td></td>").text($(v).find("MSRSTE_NM").text());
+                            $(tr).append(td);
+
+                            td = $("<td></td>").text($(v).find("PM10").text());
+                            $(tr).append(td);
+
+                            td = $("<td></td>").text($(v).find("PM25").text());
+                            $(tr).append(td);
+
+                            td = $("<td></td>").text($(v).find("IDEX_NM").text());
+                            $(tr).append(td);
+
+                            var msrste_nm = $(v).find("MSRSTE_NM").text();
+                            var pm25 = $(v).find("PM25").text();
+                            var pm10 = $(v).find("PM10").text();
+
+                            list_pm25[i] = {
+                                label: msrste_nm,
+                                y: pm25*1
+                            }
+
+                            list_pm10[i] = {
+                                label: msrste_nm,
+                                y: pm10*1
+                            }
+
+                            $("table").append(tr);
+                        });
+
+                        // window.onload = function () {
+                            var chart = new CanvasJS.Chart("chartContainer", {
+                                animationEnabled: true,
+                                theme: "light2", // "light1", "light2", "dark1", "dark2"
+                                title: {
+                                    text: "Seoul Dust Chart"
+                                },
+                                axisX: {
+                                    interval: 1,
+                                    title: "citys"
+                                },
+                                axisY: {
+                                    title: "Dust Values"
+                                },
+                                data: [
+                                    {
+                                        type: "stackedColumn",
+                                        name: "PM25",
+                                        showInLegend: true,
+                                        dataPoints: list_pm25
+                                    },
+                                    {
+                                        type: "stackedColumn",
+                                        name: "PM10",
+                                        showInLegend: true,
+                                        dataPoints: list_pm10
+                                    }
+                                ]
+                            });
+                            chart.render();
+                        // }
+                    }
+                });
+
+            });
+        </script>
+
+        <style>
+            #chartContainer{
+                padding-top: 100px;
+            }
+        </style>
+    </head>
+    <body>
+        <table border="1px" align="center">
+            <tr>
+                <th>권역</th>
+                <th>구</th>
+                <th>미세먼지</th>
+                <th>초미세먼지</th>
+                <th>상태</th>
+            </tr>
+        </table>
+
+        <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+    </body>
+</html>

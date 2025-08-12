@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+        <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=b2375d11c07378f8a8c5901b171c6274&libraries=services&autoload=false"></script>
+        <style>
+          html, body, #map {width:100%; height:100%; margin:0; padding:0}
+          #searchInput { width: 300px; padding: 8px; margin-top: 10px; }
+        </style>
+      </head>
+      <body>
+        <input type="text" id="searchInput" placeholder="장소를 입력하세요" onkeydown="handleSearch(event)" />
+        <div id="map"></div>
+        <script>
+
+          kakao.maps.load(function () {
+            try {
+
+              var map = new kakao.maps.Map(document.getElementById('map'), {
+                  center: new kakao.maps.LatLng(37.5694, 126.9831),
+                  level: 1
+              });
+
+              var marker = new kakao.maps.Marker({
+                  position: new kakao.maps.LatLng(37.5694, 126.9831),
+              });
+
+              var geocoder = new kakao.maps.services.Geocoder();
+              var places = new kakao.maps.services.Places();
+              var debounceTimeout;
+
+              marker.setMap(map);
+
+              kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+                  marker.setPosition(mouseEvent.latLng);
+
+                  var loc = marker.getPosition();
+                  window.ReactNativeWebView.postMessage(JSON.stringify({
+                      lat: loc.getLat(),
+                      lng: loc.getLng()
+                  }));
+              });
+
+            } catch (e) {
+              window.ReactNativeWebView.postMessage("에러 발생: " + e.message);
+            }
+
+            function handleSearch(event) {
+              if (event.key === "Enter") {
+                const keyword = document.getElementById('searchInput').value;
+                if (!keyword) return;
+
+                // Kakao REST API 주소 검색 요청
+                fetch("https://dapi.kakao.com/v2/local/search/address.json?query=" + encodeURIComponent(keyword), {
+                  headers: {
+                    "Authorization": "KakaoAK c1f71dc8cc391306ea455cf2e1513ed3"
+                  }
+                })
+                .then(response => response.json())
+                .then(result => {
+                  if (result.documents && result.documents.length > 0) {
+                    const place = result.documents[0];
+                    const lat = parseFloat(place.y);
+                    const lng = parseFloat(place.x);
+
+                    // 지도 이동 및 마커 위치 이동
+                    const newPos = new kakao.maps.LatLng(lat, lng);
+                    map.setCenter(newPos);
+                    marker.setPosition(newPos);
+
+                    // React Native에 좌표 전송
+                    window.ReactNativeWebView.postMessage(JSON.stringify({ lat, lng }));
+                  } else {
+                    alert("검색 결과가 없습니다.");
+                  }
+                })
+                .catch(err => alert("검색 실패: " + err.message));
+              }
+            }
+          });
+        </script>
+      </body>
+    </html>

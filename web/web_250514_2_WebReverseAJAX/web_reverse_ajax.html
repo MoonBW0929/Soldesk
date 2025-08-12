@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>web_reverse_ajax</title>
+        <script src="jQuery.js"></script>
+        <script src="http://195.168.9.125:5678/socket.io/socket.io.js"></script>
+        <script>
+
+            function reg_snack(){
+
+                $("#btn_reg").click(function(){
+
+                    var name = $("#input_name").val();
+                    var price = $("#input_price").val();
+                    var url = "http://195.168.9.125:4567/snack.reg?";
+                    url += "name="+name+"&price="+price;
+
+                    $.getJSON(url, function(result){
+
+                        if(result.execute_ok == true) {
+                            reg_get();
+                        }
+                        else alert("등록 실패");
+                    });
+                });
+            }
+
+            function reg_get(){
+
+                var url = "http://195.168.9.125:4567/snack.get";
+                
+                $.getJSON(url, function(result){
+
+                    if(result.execute_ok == true){
+                        socket.emit("snack_add", result.snack);
+                    }
+                    else alert("조회 실패");
+                });
+            }
+
+            var socket = io.connect("http://195.168.9.125:5678");
+
+            $(function(){
+
+                reg_get();
+
+                reg_snack();
+
+                socket.on("snack_add_srv", function(snack_list){
+
+                    $("#table_snack").empty();
+
+                    for(snack of snack_list){
+
+                        var tr = $("<tr></tr>");
+                        var td1 = $("<td></td>");
+                        var td2 = $("<td></td>");
+    
+                        $(td1).text(snack.name);
+                        $(td2).text(snack.price);
+                        $(tr).append(td1, td2);
+    
+                        $("#table_snack").append(tr);
+                    }
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td>이름</td>
+                <td>
+                    <input id="input_name">
+                </td>
+            </tr>
+            <tr>
+                <td>가격</td>
+                <td>
+                    <input id="input_price">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button id="btn_reg">등록</button>
+                </td>
+            </tr>
+        </table>
+        <hr>
+        <table id="table_snack" border="1px">
+        </table>
+    </body>
+</html>

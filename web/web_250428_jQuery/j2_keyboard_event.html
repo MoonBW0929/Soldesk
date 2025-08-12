@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>j2_keyboard_event</title>
+        <script src="jQuery.js"></script>
+        <script>
+            $(function (){
+
+                $("html").keydown(function (evt){
+                    if(evt.keyCode == 38){
+                        var y = $("img").offset().top - 3;
+                        $("img").css("top", y);
+                    }
+                    if(evt.keyCode == 37){
+                        var x = $("img").offset().left - 3;
+                        $("img").css("left", x);
+                    }
+                    if(evt.keyCode == 39){
+                        var x = $("img").offset().left + 3;
+                        $("img").css("left", x);
+                    }
+                    if(evt.keyCode == 40){
+                        var y = $("img").offset().top + 3;
+                        $("img").css("top", y);
+                    }
+                });
+
+                $("input").keyup(function (evt){
+                    // alert(evt.keyCode);
+
+                });
+            });
+        </script>
+        <style>
+            img{
+                position: absolute;
+            }
+        </style>
+    </head>
+    <body>
+        <input>
+        <hr>
+        <img src="ball.png">
+    </body>
+</html>

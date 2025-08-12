@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>h5_drawing</title>
+        <script src="jQuery.js"></script>
+
+        <script>
+            $(function(){
+
+                var paper = document.getElementById("c");
+                var pen = paper.getContext("2d");
+
+                var x, y;
+                var end_x, end_y;
+                var draw_mode = false;
+
+                $("canvas").mousedown(function (evt){
+                    draw_mode = true;
+                    x = evt.pageX - 8;
+                    y = evt.pageY - 8;
+                });
+                $("canvas").mousemove(function (evt){
+                    if(draw_mode){
+                        end_x = evt.pageX - 8;
+                        end_y = evt.pageY - 8;
+
+                        pen.beginPath();
+                        pen.moveTo(x, y);
+                        pen.lineTo(end_x, end_y);
+                        pen.closePath();
+                        pen.stroke();
+                        x = end_x;
+                        y = end_y;
+                    }
+                });
+                $("canvas").mouseup(function (){
+                    draw_mode = false;
+                });
+            });
+        </script>
+
+        <style>
+            canvas{
+                border: 1px black solid;
+            }
+        </style>
+
+    </head>
+    <body>
+        <canvas id="c" width="600" height="400"></canvas>
+        <h2></h2>
+        <h3></h3>
+    </body>
+</html>

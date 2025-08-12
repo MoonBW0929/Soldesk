@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>j2_kakao_map</title>
+	<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=6e2377538e7c2d476494bdd32b7161a0"></script>
+	<script src="jQuery.js"></script>
+    <script>
+        
+        var map;
+        var marker;
+        var roadviewContainer;
+        var roadview; 
+        var roadviewClient;
+
+        function move_map(lat, lon){
+
+            var moveLatLon = new kakao.maps.LatLng(lat, lon);
+    
+            map.setCenter(moveLatLon);
+            marker.setPosition(moveLatLon);
+
+            var position = new kakao.maps.LatLng(lat, lon);
+            roadviewClient.getNearestPanoId(position, 50, function(panoId) {
+                roadview.setPanoId(panoId, position);
+            });
+        }
+
+        $(function(){
+
+            var container = document.getElementById('map');
+    
+            navigator.geolocation.getCurrentPosition(function (pos){
+                var lat = pos.coords.latitude;
+                var lon = pos.coords.longitude;
+    
+                // 카카오 지도 생성
+                var options = {
+                    center: new kakao.maps.LatLng(lat, lon),
+                    level: 3
+                };
+    
+                map = new kakao.maps.Map(container, options);
+    
+                // 지도에 마커 표시
+                marker = new kakao.maps.Marker({ 
+                    position: map.getCenter() 
+                }); 
+                marker.setMap(map);
+    
+                kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
+                    
+                    var latlng = mouseEvent.latLng; 
+                    
+                    marker.setPosition(latlng);
+                });
+    
+                // 로드 뷰 생성
+                roadviewContainer = document.getElementById('roadview');
+                roadview = new kakao.maps.Roadview(roadviewContainer); 
+                roadviewClient = new kakao.maps.RoadviewClient();
+    
+                var position = new kakao.maps.LatLng(lat, lon);
+    
+                roadviewClient.getNearestPanoId(position, 50, function(panoId) {
+                    roadview.setPanoId(panoId, position);
+                }); 
+            });
+            
+            $("#local").keydown(function(evt){
+                if(evt.keyCode == 13){
+                    
+                    var keyword = $(this).val();
+                    $.ajax({
+                        url: "https://dapi.kakao.com/v2/local/search/address.json",
+                        data: { query: keyword },
+                        beforeSend: function (req) {
+                            req.setRequestHeader("Authorization", "KakaoAK c1f71dc8cc391306ea455cf2e1513ed3");
+                        },
+                        success: function (local) {
+                            move_map(local.documents[0].y, local.documents[0].x);
+                        }
+                    });
+                }
+            });
+
+            $("#find").keydown(function(evt){
+                if(evt.keyCode == 13){
+
+                    var keyword = $(this).val();
+                    $.ajax({
+                        url: "https://dapi.kakao.com/v2/local/search/keyword.json",
+                        data: {
+                            query: keyword,
+                            x : map.getCenter().getLng(),
+                            y : map.getCenter().getLat()
+                        },
+                        beforeSend: function (req) {
+                            req.setRequestHeader("Authorization", "KakaoAK c1f71dc8cc391306ea455cf2e1513ed3");
+                        },
+                        success: function (find) {
+                            console.log(JSON.stringify(find));
+
+                            $.each(find.documents, function(i, v){
+                                var name = v.place_name;
+                                var place = v.road_address_name;
+                                var url = v.place_url;
+
+                                var table = $("<table></table>").attr("border", "1px").attr("align", "center");
+                                $(table).css("margin-top", "15px");
+                                $(table).attr("class", "item");
+                                var tr;
+                                var td1, td2;
+                            
+                                tr = $("<tr></tr>");
+                                td1 = $("<td></td>").text("이름").css("width", "50px");
+                                td2 = $("<td></td>").text(name).css("width", "500px").attr("class", "name");
+                                $(tr).append(td1, td2);
+                                $(table).append(tr);
+
+                                tr = $("<tr></tr>");
+                                td1 = $("<td></td>").text("위치");
+                                td2 = $("<td></td>").text(place).attr("class", "place");
+                                $(tr).append(td1, td2);
+                                $(table).append(tr);
+
+                                tr = $("<tr></tr>");
+                                td1 = $("<td></td>").text("url");
+                                td2 = $("<td></td>").text(url).attr("class", "url");
+                                $(tr).append(td1, td2);
+                                $(table).append(tr);
+
+                                $("#item_list").append(table);
+                            });
+
+                            $(".item").click(function(){
+
+                                var keyword = $(this).find(".place").text();
+                                $.ajax({
+                                    url: "https://dapi.kakao.com/v2/local/search/address.json",
+                                    data: { query: keyword },
+                                    beforeSend: function (req) {
+                                        req.setRequestHeader("Authorization", "KakaoAK 48412524e1d7ccbf166a18a4687b943e");
+                                    },
+                                    success: function (local) {
+                                        move_map(local.documents[0].y, local.documents[0].x);
+                                    }
+                                });
+                            });
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+    <style>
+        #item_list{
+            height: 600px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <table align="center" border="1px">
+        <tr>
+            <td>
+                <div id="map" style="width:500px; height:400px;"></div>
+            </td>
+            <td>
+                <div id="roadview" style="width:500px; height:400px;"></div>
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+                <input id="local">
+            </td>
+            <td align="center">
+                <input id="find">
+            </td>
+        </tr>
+    </table>
+    <div id="item_list"></div>
+</body>
+</html>
